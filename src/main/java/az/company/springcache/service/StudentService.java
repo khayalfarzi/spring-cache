@@ -44,7 +44,8 @@ public class StudentService {
      * also here information stored in cache
      **/
     @Cacheable("allStudents")
-    public Map<String, Student> getAll() {
+    public Map<String, Student> getAll() throws InterruptedException {
+        Thread.sleep(5000);
         return studentRepository.getAll();
     }
 }

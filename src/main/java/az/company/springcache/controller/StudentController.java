@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    public Map<String, Student> findAll() {
+    public Map<String, Student> findAll() throws InterruptedException {
         return studentService.getAll();
     }
 
