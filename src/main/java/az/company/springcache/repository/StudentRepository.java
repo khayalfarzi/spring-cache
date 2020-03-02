@@ -23,4 +23,9 @@ public class StudentRepository {
         return STUDENT_MAP.get(id);
     }
 
+    public void update(Student student) {
+        /**
+        * just for testing...
+        * */
+    }
 }

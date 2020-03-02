@@ -4,6 +4,7 @@ import az.company.springcache.domain.Student;
 import az.company.springcache.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,22 @@ public class StudentService {
 
 
     /**
+     * While @CacheEvict reduces the overhead of looking up entries in a large cache by removing stale and unused entries,
+     * ideally, you want to avoid evicting too much data out of the cache.
+     * Instead, you'd want to selectively and intelligently update the entries whenever they're altered.
+     *
+     * With the @CachePut annotation, you can update the content of the cache without interfering the method execution.
+     * That is, the method would always be executed and the result cached.
+     *
+     * reference: https://www.baeldung.com/spring-cache-tutorial
+    * */
+    @CachePut(value = "allStudents")
+    public void update(Student student) {
+        studentRepository.update(student);
+    }
+
+
+    /**
      * when we get student by id, information stored in cache
      **/
     @Cacheable("student")
@@ -45,7 +62,9 @@ public class StudentService {
      **/
     @Cacheable("allStudents")
     public Map<String, Student> getAll() throws InterruptedException {
+
         Thread.sleep(5000);
+
         return studentRepository.getAll();
     }
 }
